@@ -1,13 +1,13 @@
-// Le'Voyage Chatbot Knowledge Base
+// Events by Le'Voyage Chatbot Knowledge Base
 // This document contains all the information the chatbot can reference
 
 export const CHATBOT_KNOWLEDGE = {
   // Company Information
   company: {
-    name: "Le'Voyage",
+    name: "Events by Le'Voyage",
     tagline: "Your personal gateway to curated travel experiences",
     owner: "Ellie David",
-    description: "Le'Voyage specializes in organizing group cruises and curated travel experiences. Every trip is thoughtfully managed, scheduled, and organized to create unforgettable memories.",
+    description: "Events by Le'Voyage specializes in organizing group cruises and curated travel experiences. Every trip is thoughtfully managed, scheduled, and organized to create unforgettable memories.",
     services: [
       "Group Cruises",
       "Custom Itineraries", 
@@ -180,7 +180,7 @@ Eating in Marseille is cultural archaeology. Bouillabaisse must be ordered in ad
     },
     {
       question: "Can I book for a group?",
-      answer: "Absolutely! Le'Voyage specializes in group travel. Group rates may be available for parties of 8 or more."
+      answer: "Absolutely! Events by Le'Voyage specializes in group travel. Group rates may be available for parties of 8 or more."
     },
     {
       question: "What documents do I need?",
@@ -198,9 +198,9 @@ Eating in Marseille is cultural archaeology. Bouillabaisse must be ordered in ad
 
   // Chatbot Personality & Responses
   chatbot: {
-    name: "Le'Voyage Assistant",
+    name: "Events by Le'Voyage Assistant",
     personality: "Friendly, knowledgeable, and helpful travel consultant",
-    greeting: "Welcome to Le'Voyage! I'm here to help you plan your perfect Mediterranean adventure. What would you like to know?",
+    greeting: "Welcome to Events by Le'Voyage! I'm here to help you plan your perfect Mediterranean adventure. What would you like to know?",
     fallbackResponse: "I'd be happy to help with that! For detailed inquiries or to start your booking, please click the 'Reserve Spot' button above. Is there anything else about our trips I can tell you?",
     topicsCanHelp: [
       "Trip details and itineraries",
@@ -299,7 +299,7 @@ export function generateResponse(userMessage) {
   
   // Greeting
   if (message.includes('hello') || message.includes('hi') || message.includes('hey') || message.length < 10) {
-    return `Welcome to Le'Voyage! Ask me about destinations, pricing, or booking.`;
+    return `Welcome to Events by Le'Voyage! Ask me about destinations, pricing, or booking.`;
   }
   
   // Help/what can you do

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { X, Check, MapPin, Calendar, Ship, ChevronRight, MessageCircle, Send, Minus } from 'lucide-react';
+import { X, Check, MapPin, Calendar, Ship, ChevronRight, ChevronLeft, MessageCircle, Send, Minus } from 'lucide-react';
 import { generateResponse } from './chatbotKnowledge';
 
 // --- Assets & Data ---
@@ -157,7 +157,7 @@ const ChatModal = ({ isOpen, onClose, onMinimize, messages, setMessages }) => {
               <MessageCircle size={14} className="text-white/80" />
             </div>
             <div>
-              <h3 className="text-sm font-medium text-white font-sans">Le'Voyage Assistant</h3>
+              <h3 className="text-sm font-medium text-white font-sans">Events by Le'Voyage Assistant</h3>
               <p className="text-[10px] text-white/50 font-sans">Ask me anything about your trip</p>
             </div>
           </div>
@@ -186,7 +186,7 @@ const ChatModal = ({ isOpen, onClose, onMinimize, messages, setMessages }) => {
               <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-4">
                 <MessageCircle size={20} className="text-white/40" />
               </div>
-              <p className="text-white/60 text-sm font-sans mb-2">Welcome to Le'Voyage!</p>
+              <p className="text-white/60 text-sm font-sans mb-2">Welcome to Events by Le'Voyage!</p>
               <p className="text-white/40 text-xs font-sans">Ask about destinations, pricing, or anything else.</p>
             </div>
           )}
@@ -644,7 +644,7 @@ const RegistrationFlow = ({ onClose, initialTripId }) => {
             >
               {isSubmitting ? 'Submitting...' : 'Submit Reservation Request'}
             </button>
-            <p className="text-[9px] mt-5 opacity-30 uppercase tracking-widest font-sans">Ellie David • Le'Voyage</p>
+            <p className="text-[9px] mt-5 opacity-30 uppercase tracking-widest font-sans">Ellie David • Events by Le'Voyage</p>
           </div>
         </div>
       )
@@ -730,7 +730,7 @@ const HomePage = ({ onSelectTrip, onMeetGeno }) => (
         <div className="bg-black/30 backdrop-blur-xl border border-white/10 rounded-2xl p-6 md:p-8 flex flex-col flex-grow justify-between animate-fade-up">
             <div>
               <h2 className="text-5xl md:text-6xl lg:text-7xl font-display italic text-white mb-6">
-                Le'Voyage
+                Events by Le'Voyage
               </h2>
               <div className="h-px w-16 bg-white/40 mb-6"></div>
               <p className="text-white/90 font-sans text-base md:text-lg leading-relaxed mb-4 max-w-lg">
@@ -1094,8 +1094,8 @@ export default function TravelExperience() {
 
   const handleSelectTrip = (tripId) => {
     setCurrentView('trip');
-    // Auto-select Monaco (first destination) when entering trip view
-    setActiveMarker(MAP_MARKERS.find(m => m.id === 'monaco') || MAP_MARKERS[0]);
+    // Auto-select Marseille (first destination) when entering trip view
+    setActiveMarker(MAP_MARKERS[0]);
   };
 
   const handleGoHome = () => {
@@ -1105,6 +1105,22 @@ export default function TravelExperience() {
 
   const handleMeetGeno = () => {
     setCurrentView('musician');
+  };
+
+  // Navigate to previous location on the map
+  const handlePrevLocation = () => {
+    if (currentView !== 'trip') return;
+    const currentIndex = MAP_MARKERS.findIndex(m => m.id === activeMarker?.id);
+    const prevIndex = currentIndex <= 0 ? MAP_MARKERS.length - 1 : currentIndex - 1;
+    setActiveMarker(MAP_MARKERS[prevIndex]);
+  };
+
+  // Navigate to next location on the map
+  const handleNextLocation = () => {
+    if (currentView !== 'trip') return;
+    const currentIndex = MAP_MARKERS.findIndex(m => m.id === activeMarker?.id);
+    const nextIndex = currentIndex >= MAP_MARKERS.length - 1 ? 0 : currentIndex + 1;
+    setActiveMarker(MAP_MARKERS[nextIndex]);
   };
 
   const handleChatToggle = () => {
@@ -1137,7 +1153,7 @@ export default function TravelExperience() {
           <header className="flex justify-between items-start z-50">
             <button onClick={handleGoHome} className="cursor-pointer group text-left">
               <h1 className="text-lg md:text-xl font-display italic text-white/80 group-hover:text-white transition-colors">
-                Ellie David <span className="text-white/50 group-hover:text-white/70">Le'Voyage</span>
+                Ellie David <span className="text-white/50 group-hover:text-white/70">Events by Le'Voyage</span>
               </h1>
             </button>
             <button 
@@ -1169,11 +1185,60 @@ export default function TravelExperience() {
           <footer className="z-20">
             <div className="flex items-center justify-between border-t border-white/10 pt-6">
               <ChatButton onClick={handleChatToggle} isOpen={isChatOpen} />
-              <p className="text-[8px] uppercase tracking-[0.2em] text-white/70 font-sans">
-                Ellie David • Le'Voyage
+              
+              {/* Locations Navigation - only visible on trip view */}
+              {currentView === 'trip' && (
+                <div className="flex items-center gap-2">
+                  {/* Left Arrow */}
+                  <button
+                    onClick={handlePrevLocation}
+                    className="
+                      w-10 h-10 rounded-xl
+                      bg-black/30 backdrop-blur-xl border border-white/10
+                      hover:bg-black/40 hover:border-white/20
+                      flex items-center justify-center
+                      transition-all duration-300
+                      hover:scale-105
+                      group
+                    "
+                    aria-label="Previous location"
+                  >
+                    <ChevronLeft size={16} className="text-white/70 group-hover:text-white transition-colors" />
+                  </button>
+                  
+                  {/* Locations Label */}
+                  <div className="
+                    px-5 py-2.5 rounded-xl
+                    bg-black/30 backdrop-blur-xl border border-white/10
+                    flex items-center gap-2
+                    font-sans text-[10px] uppercase tracking-[0.15em] font-medium text-white/70
+                  ">
+                    <MapPin size={14} />
+                    <span>Locations</span>
+                  </div>
+                  
+                  {/* Right Arrow */}
+                  <button
+                    onClick={handleNextLocation}
+                    className="
+                      w-10 h-10 rounded-xl
+                      bg-black/30 backdrop-blur-xl border border-white/10
+                      hover:bg-black/40 hover:border-white/20
+                      flex items-center justify-center
+                      transition-all duration-300
+                      hover:scale-105
+                      group
+                    "
+                    aria-label="Next location"
+                  >
+                    <ChevronRight size={16} className="text-white/70 group-hover:text-white transition-colors" />
+                  </button>
+                </div>
+              )}
+              
+              <p className="text-[8px] uppercase tracking-[0.2em] text-white/70 font-sans hidden md:block">
+                Ellie David • Events by Le'Voyage
               </p>
-              {/* Spacer to keep text centered */}
-              <div className="w-12"></div>
             </div>
           </footer>
         </div>
