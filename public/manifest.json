@@ -1,0 +1,27 @@
+{
+  "name": "Events by Le'Voyage",
+  "short_name": "Le'Voyage",
+  "description": "Your personal gateway to curated travel experiences. Mediterranean cruises, exotic destinations, and unforgettable memories.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#030303",
+  "theme_color": "#030303",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["travel", "lifestyle"],
+  "lang": "en-US"
+}
+
