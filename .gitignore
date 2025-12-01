@@ -23,3 +23,10 @@ Thumbs.db
 *.log
 npm-debug.log*
 
+# Large video files
+public/videos/
+public/*.mp4
+public/*.mov
+*.mp4
+*.mov
+

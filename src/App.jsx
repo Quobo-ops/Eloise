@@ -148,30 +148,33 @@ const ChatModal = ({ isOpen, onClose, onMinimize, messages, setMessages }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="absolute bottom-[88px] left-[72px] md:left-[104px] z-[90] animate-fade-up">
-      <div className="w-[320px] md:w-[360px] bg-[#0a0a0a] border border-white/15 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[420px]">
+    <div className="fixed md:absolute bottom-0 left-0 right-0 md:bottom-[88px] md:left-[72px] lg:left-[104px] md:right-auto z-[90] animate-fade-up">
+      <div className="w-full md:w-[360px] bg-[#0a0a0a] border-t md:border border-white/15 md:rounded-2xl shadow-2xl overflow-hidden flex flex-col h-[75vh] md:h-auto md:max-h-[420px]">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-white/10">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
-              <MessageCircle size={14} className="text-white/80" />
+        <div className="flex items-center justify-between p-3 sm:p-4 border-b border-white/10">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
+              <MessageCircle size={12} className="text-white/80 sm:w-3.5 sm:h-3.5" />
             </div>
-            <div>
-              <h3 className="text-sm font-medium text-white font-sans">Events by Le'Voyage Assistant</h3>
-              <p className="text-[10px] text-white/50 font-sans">Ask me anything about your trip</p>
+            <div className="min-w-0">
+              <h3 className="text-xs sm:text-sm font-medium text-white font-sans truncate">
+                <span className="sm:hidden">Le'Voyage Assistant</span>
+                <span className="hidden sm:inline">Events by Le'Voyage Assistant</span>
+              </h3>
+              <p className="text-[9px] sm:text-[10px] text-white/50 font-sans truncate">Ask me anything about your trip</p>
             </div>
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-0.5 sm:gap-1 flex-shrink-0">
             <button 
               onClick={onMinimize}
-              className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+              className="p-1.5 sm:p-2 hover:bg-white/10 rounded-lg transition-colors"
               aria-label="Minimize chat"
             >
               <Minus size={14} className="text-white/60 hover:text-white" />
             </button>
             <button 
               onClick={onClose}
-              className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+              className="p-1.5 sm:p-2 hover:bg-white/10 rounded-lg transition-colors"
               aria-label="Close chat"
             >
               <X size={14} className="text-white/60 hover:text-white" />
@@ -180,14 +183,14 @@ const ChatModal = ({ isOpen, onClose, onMinimize, messages, setMessages }) => {
         </div>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-[280px] max-h-[320px]">
+        <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-[200px] md:min-h-[280px] md:max-h-[320px] custom-scrollbar">
           {messages.length === 0 && (
-            <div className="text-center py-8">
-              <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-4">
-                <MessageCircle size={20} className="text-white/40" />
+            <div className="text-center py-6 sm:py-8">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                <MessageCircle size={18} className="text-white/40 sm:w-5 sm:h-5" />
               </div>
-              <p className="text-white/60 text-sm font-sans mb-2">Welcome to Events by Le'Voyage!</p>
-              <p className="text-white/40 text-xs font-sans">Ask about destinations, pricing, or anything else.</p>
+              <p className="text-white/60 text-xs sm:text-sm font-sans mb-1.5 sm:mb-2">Welcome to Events by Le'Voyage!</p>
+              <p className="text-white/40 text-[10px] sm:text-xs font-sans px-4">Ask about destinations, pricing, or anything else.</p>
             </div>
           )}
           
@@ -225,30 +228,30 @@ const ChatModal = ({ isOpen, onClose, onMinimize, messages, setMessages }) => {
 
         {/* Input */}
         <form 
-          className="p-4 border-t border-white/10"
+          className="p-3 sm:p-4 border-t border-white/10 safe-area-bottom"
           onSubmit={(e) => {
             e.preventDefault();
             handleSend();
           }}
         >
-          <div className="flex items-center gap-2 bg-white/5 rounded-xl px-4 py-2 border border-white/10 focus-within:border-white/20 transition-colors">
+          <div className="flex items-center gap-2 bg-white/5 rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 border border-white/10 focus-within:border-white/20 transition-colors">
             <input
               ref={inputRef}
               type="text"
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Type a message..."
-              className="flex-1 bg-transparent text-white text-sm font-sans placeholder:text-white/30 focus:outline-none"
+              className="flex-1 bg-transparent text-white text-sm font-sans placeholder:text-white/30 focus:outline-none min-w-0"
             />
             <button 
               type="submit"
-              className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+              className="p-2 hover:bg-white/10 rounded-lg transition-colors flex-shrink-0"
               aria-label="Send message"
             >
               <Send size={16} className="text-white/80" />
             </button>
           </div>
-          <p className="text-[9px] text-white/30 text-center mt-2 font-sans">
+          <p className="text-[8px] sm:text-[9px] text-white/30 text-center mt-2 font-sans">
             Ask me anything about your trip!
           </p>
         </form>
@@ -263,7 +266,7 @@ const ChatButton = ({ onClick, isOpen }) => (
     onClick={onClick}
     aria-label={isOpen ? "Minimize chat" : "Open chat"}
     className={`
-      w-12 h-12 rounded-2xl
+      w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl
       bg-black/30 backdrop-blur-xl border
       ${isOpen ? 'border-white/30 bg-black/40' : 'border-white/10 hover:border-white/20'}
       hover:bg-black/40
@@ -272,11 +275,12 @@ const ChatButton = ({ onClick, isOpen }) => (
       hover:scale-105
       group
       relative
+      flex-shrink-0
     `}
   >
-    <MessageCircle size={18} className={`${isOpen ? 'text-white' : 'text-white/80'} group-hover:text-white transition-colors`} />
+    <MessageCircle size={16} className={`${isOpen ? 'text-white' : 'text-white/80'} group-hover:text-white transition-colors sm:w-[18px] sm:h-[18px]`} />
     
-    {/* Tooltip - only show when chat is closed */}
+    {/* Tooltip - only show when chat is closed and on larger screens */}
     {!isOpen && (
       <span className="
         absolute bottom-full mb-2
@@ -285,6 +289,7 @@ const ChatButton = ({ onClick, isOpen }) => (
         text-white/90 text-xs font-medium
         opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0
         transition-all duration-200
+        hidden sm:block
       ">
         Chat with us
       </span>
@@ -299,10 +304,10 @@ const MapMarker = ({ marker, isActive, onClick }) => (
     aria-label={`${marker.label}, ${marker.subtext}`}
     className={`
       absolute -translate-x-1/2 -translate-y-1/2 group
-      w-5 h-5 flex items-center justify-center
+      w-8 h-8 sm:w-6 sm:h-6 flex items-center justify-center
       focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent
       rounded-full transition-transform duration-300
-      ${isActive ? 'z-30 scale-110' : 'z-20 hover:scale-125 hover:z-40'}
+      ${isActive ? 'z-30 scale-110' : 'z-20 hover:scale-125 hover:z-40 active:scale-110'}
     `}
     style={{ left: `${marker.x}%`, top: `${marker.y}%` }}
   >
@@ -323,13 +328,14 @@ const MapMarker = ({ marker, isActive, onClick }) => (
       `} 
     />
     
-    {/* Label tooltip - hover only */}
+    {/* Label tooltip - hover only on desktop, hidden on mobile since we show details below */}
     <span 
       className="
         absolute left-1/2 -translate-x-1/2 top-full mt-2 
         whitespace-nowrap pointer-events-none
         transition-all duration-200 ease-out
         opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0
+        hidden sm:block
       "
     >
       <span className="block bg-black/30 backdrop-blur-xl border border-white/10 px-3 py-1.5 rounded-lg">
@@ -526,13 +532,13 @@ const RegistrationFlow = ({ onClose, initialTripId }) => {
     {
       id: 'intro',
       component: (
-        <div className="text-center space-y-8">
-          <h2 className="text-4xl md:text-5xl font-display italic text-white/90">{tripDetails.title}</h2>
+        <div className="text-center space-y-6 md:space-y-8 px-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-display italic text-white/90">{tripDetails.title}</h2>
           <div className="h-px w-16 bg-white/20 mx-auto"></div>
           <p className="text-[10px] uppercase tracking-[0.25em] opacity-60 font-sans">{tripDetails.dates}</p>
           <button 
             onClick={handleNext} 
-            className="mt-8 px-10 py-4 bg-white text-black rounded-full hover:bg-gray-200 transition-colors uppercase text-[9px] font-bold tracking-[0.2em] font-sans shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+            className="mt-6 md:mt-8 px-8 md:px-10 py-3 md:py-4 bg-white text-black rounded-full hover:bg-gray-200 transition-colors uppercase text-[9px] font-bold tracking-[0.2em] font-sans shadow-[0_0_20px_rgba(255,255,255,0.3)]"
           >
             Start Booking
           </button>
@@ -543,17 +549,17 @@ const RegistrationFlow = ({ onClose, initialTripId }) => {
       id: 'guest',
       title: 'Primary Guest',
       component: (
-        <div className="space-y-8 w-full max-w-md">
+        <div className="space-y-6 md:space-y-8 w-full max-w-md px-4 md:px-0">
           <div className="group">
-            <label className="text-[9px] uppercase tracking-widest opacity-40 mb-2 block font-sans">Full Legal Name <span className="normal-case tracking-normal opacity-70">(As it appears on your passport)</span></label>
+            <label className="text-[9px] uppercase tracking-widest opacity-40 mb-2 block font-sans">Full Legal Name <span className="normal-case tracking-normal opacity-70 hidden sm:inline">(As it appears on your passport)</span></label>
             <input 
               type="text" 
               value={formData.fullName}
               onChange={(e) => handleInputChange('fullName', e.target.value)}
-              className="w-full bg-transparent border-b border-white/20 py-2 focus:outline-none focus:border-white transition-colors text-xl font-display placeholder:text-white/10" 
+              className="w-full bg-transparent border-b border-white/20 py-3 md:py-2 focus:outline-none focus:border-white transition-colors text-lg md:text-xl font-display placeholder:text-white/10" 
             />
           </div>
-          <div className="grid grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
             <div className="group">
                <label className="text-[9px] uppercase tracking-widest opacity-40 mb-2 block font-sans">Date of Birth</label>
                <input 
@@ -561,7 +567,7 @@ const RegistrationFlow = ({ onClose, initialTripId }) => {
                  value={formData.dateOfBirth}
                  onChange={(e) => handleInputChange('dateOfBirth', e.target.value)}
                  placeholder="MM/DD/YYYY"
-                 className="w-full bg-transparent border-b border-white/20 py-2 focus:outline-none focus:border-white font-sans text-sm placeholder:text-white/20" 
+                 className="w-full bg-transparent border-b border-white/20 py-3 md:py-2 focus:outline-none focus:border-white font-sans text-base md:text-sm placeholder:text-white/20" 
                />
             </div>
             <div className="group">
@@ -570,7 +576,7 @@ const RegistrationFlow = ({ onClose, initialTripId }) => {
                  type="tel" 
                  value={formData.phone}
                  onChange={(e) => handleInputChange('phone', e.target.value)}
-                 className="w-full bg-transparent border-b border-white/20 py-2 focus:outline-none focus:border-white font-sans text-sm" 
+                 className="w-full bg-transparent border-b border-white/20 py-3 md:py-2 focus:outline-none focus:border-white font-sans text-base md:text-sm" 
                />
             </div>
           </div>
@@ -580,7 +586,7 @@ const RegistrationFlow = ({ onClose, initialTripId }) => {
                type="email" 
                value={formData.email}
                onChange={(e) => handleInputChange('email', e.target.value)}
-               className="w-full bg-transparent border-b border-white/20 py-2 focus:outline-none focus:border-white font-sans text-sm" 
+               className="w-full bg-transparent border-b border-white/20 py-3 md:py-2 focus:outline-none focus:border-white font-sans text-base md:text-sm" 
              />
           </div>
         </div>
@@ -590,12 +596,12 @@ const RegistrationFlow = ({ onClose, initialTripId }) => {
       id: 'stateroom',
       title: "Select Stateroom",
       component: (
-        <div className="space-y-4 w-full max-w-md font-sans">
+        <div className="space-y-3 md:space-y-4 w-full max-w-md font-sans px-4 md:px-0">
           {tripDetails.pricing.map(option => (
             <button 
               key={option.type} 
               onClick={() => setSelectedCabin(option.type)} 
-              className={`w-full border px-6 py-5 rounded-lg flex justify-between items-center transition-all duration-300 ${
+              className={`w-full border px-4 md:px-6 py-4 md:py-5 rounded-lg flex justify-between items-center transition-all duration-300 ${
                 selectedCabin === option.type 
                   ? 'bg-white/10 border-white/60' 
                   : 'border-white/10 hover:border-white/30 hover:bg-white/5'
@@ -612,23 +618,23 @@ const RegistrationFlow = ({ onClose, initialTripId }) => {
       id: 'summary',
       title: "Review Details",
       component: (
-        <div className="space-y-6 w-full max-w-md">
-          <div className="bg-black/30 backdrop-blur-xl border border-white/10 p-8 rounded-2xl">
-            <div className="flex justify-between items-center border-b border-white/10 pb-6 mb-6">
-              <span className="font-display text-2xl italic text-white/90">{tripDetails.title}</span>
+        <div className="space-y-4 md:space-y-6 w-full max-w-md px-4 md:px-0">
+          <div className="bg-black/30 backdrop-blur-xl border border-white/10 p-5 md:p-8 rounded-2xl">
+            <div className="flex justify-between items-center border-b border-white/10 pb-4 md:pb-6 mb-4 md:mb-6">
+              <span className="font-display text-xl md:text-2xl italic text-white/90">{tripDetails.title}</span>
             </div>
             <div className="space-y-3 text-sm opacity-70 font-sans tracking-wide">
-              <div className="flex justify-between">
-                <span>Guest</span>
-                <span>{formData.fullName || 'Not provided'}</span>
+              <div className="flex justify-between gap-2">
+                <span className="flex-shrink-0">Guest</span>
+                <span className="truncate text-right">{formData.fullName || 'Not provided'}</span>
               </div>
-              <div className="flex justify-between">
-                <span>Email</span>
-                <span>{formData.email || 'Not provided'}</span>
+              <div className="flex justify-between gap-2">
+                <span className="flex-shrink-0">Email</span>
+                <span className="truncate text-right">{formData.email || 'Not provided'}</span>
               </div>
-              <div className="flex justify-between">
-                <span>Phone</span>
-                <span>{formData.phone || 'Not provided'}</span>
+              <div className="flex justify-between gap-2">
+                <span className="flex-shrink-0">Phone</span>
+                <span className="truncate text-right">{formData.phone || 'Not provided'}</span>
               </div>
               <div className="flex justify-between border-t border-white/10 pt-3 mt-3">
                 <span>{selectedCabin || 'No cabin selected'}</span>
@@ -636,7 +642,7 @@ const RegistrationFlow = ({ onClose, initialTripId }) => {
               </div>
             </div>
           </div>
-          <div className="text-center pt-4">
+          <div className="text-center pt-2 md:pt-4">
             <button 
               onClick={handleSubmit}
               disabled={isSubmitting}
@@ -644,7 +650,7 @@ const RegistrationFlow = ({ onClose, initialTripId }) => {
             >
               {isSubmitting ? 'Submitting...' : 'Submit Reservation Request'}
             </button>
-            <p className="text-[9px] mt-5 opacity-30 uppercase tracking-widest font-sans">Ellie David • Events by Le'Voyage</p>
+            <p className="text-[9px] mt-4 md:mt-5 opacity-30 uppercase tracking-widest font-sans">Ellie David • Events by Le'Voyage</p>
           </div>
         </div>
       )
@@ -652,15 +658,15 @@ const RegistrationFlow = ({ onClose, initialTripId }) => {
     {
       id: 'done',
       component: (
-        <div className="text-center">
-          <div className="w-20 h-20 rounded-full border border-green-400/20 flex items-center justify-center mx-auto mb-8 bg-green-900/10 backdrop-blur-md">
-            <Check className="w-8 h-8 text-green-400" />
+        <div className="text-center px-4">
+          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border border-green-400/20 flex items-center justify-center mx-auto mb-6 sm:mb-8 bg-green-900/10 backdrop-blur-md">
+            <Check className="w-6 h-6 sm:w-8 sm:h-8 text-green-400" />
           </div>
-          <h2 className="text-4xl font-display italic mb-4 text-white/90">Request Received.</h2>
-          <p className="opacity-50 text-xs mb-12 font-sans tracking-wide leading-relaxed max-w-xs mx-auto">We will check availability and call you shortly to confirm.</p>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-display italic mb-3 sm:mb-4 text-white/90">Request Received.</h2>
+          <p className="opacity-50 text-xs mb-8 sm:mb-12 font-sans tracking-wide leading-relaxed max-w-xs mx-auto">We will check availability and call you shortly to confirm.</p>
           <button 
             onClick={onClose} 
-            className="text-[9px] uppercase tracking-[0.2em] border-b border-white/20 pb-1 hover:border-white transition-colors text-white/60 hover:text-white font-sans"
+            className="text-[9px] uppercase tracking-[0.2em] border-b border-white/20 pb-1 hover:border-white transition-colors text-white/60 hover:text-white font-sans py-2 px-4"
           >
             Return Home
           </button>
@@ -672,25 +678,25 @@ const RegistrationFlow = ({ onClose, initialTripId }) => {
   const currentQ = questions[step];
 
   return (
-    <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-3xl text-white flex flex-col items-center justify-center">
+    <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-3xl text-white flex flex-col items-center justify-center overflow-y-auto safe-area-top safe-area-bottom">
       <button 
         onClick={onClose} 
-        className="absolute top-8 right-8 p-4 opacity-50 hover:opacity-100 transition-opacity"
+        className="absolute top-4 right-4 md:top-8 md:right-8 p-3 md:p-4 opacity-50 hover:opacity-100 transition-opacity z-10"
       >
         <X size={20}/>
       </button>
-      <div className={`w-full max-w-xl px-8 transition-all duration-500 transform ${fade}`}>
+      <div className={`w-full max-w-xl px-4 md:px-8 py-16 md:py-8 transition-all duration-500 transform ${fade}`}>
         {currentQ.title && (
-          <h3 className="text-[9px] font-bold uppercase tracking-[0.4em] text-white/30 mb-12 text-center font-sans">
+          <h3 className="text-[9px] font-bold uppercase tracking-[0.3em] md:tracking-[0.4em] text-white/30 mb-8 md:mb-12 text-center font-sans">
             {currentQ.title}
           </h3>
         )}
         <div className="flex flex-col items-center">{currentQ.component}</div>
         {step > 0 && step < questions.length - 1 && (
-          <div className="flex justify-center mt-12">
+          <div className="flex justify-center mt-8 md:mt-12">
             <button 
               onClick={() => setStep(s => s - 1)} 
-              className="text-[9px] uppercase tracking-[0.2em] opacity-30 hover:opacity-80 transition-opacity font-sans"
+              className="text-[9px] uppercase tracking-[0.2em] opacity-30 hover:opacity-80 transition-opacity font-sans py-2 px-4"
             >
               Back
             </button>
@@ -703,79 +709,79 @@ const RegistrationFlow = ({ onClose, initialTripId }) => {
 
 // Home Page Component
 const HomePage = ({ onSelectTrip, onMeetGeno }) => (
-  <div className="w-full max-w-[1400px] mx-auto px-4">
+  <div className="w-full max-w-[1400px] mx-auto px-2 sm:px-4">
     
     {/* Main Hero Title */}
     <div className="text-center mb-4 md:mb-6 animate-fade-up">
-      <h1 className="text-3xl md:text-5xl lg:text-6xl font-display italic text-white mb-3 text-glow">
+      <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-display italic text-white mb-3 text-glow px-2">
         Geno Delafose Zydeco Cruise 2025
       </h1>
-      <div className="h-px w-24 bg-amber-400/60 mx-auto mb-4"></div>
+      <div className="h-px w-16 sm:w-24 bg-amber-400/60 mx-auto mb-3 sm:mb-4"></div>
       <button
         onClick={onMeetGeno}
-        className="px-6 py-2.5 bg-amber-500/20 hover:bg-amber-500/40 border border-amber-500/50 hover:border-amber-400 rounded-full text-amber-200 hover:text-white text-sm font-sans font-medium tracking-wide transition-all duration-300 hover:scale-105"
+        className="px-5 sm:px-6 py-2 sm:py-2.5 bg-amber-500/20 hover:bg-amber-500/40 border border-amber-500/50 hover:border-amber-400 rounded-full text-amber-200 hover:text-white text-xs sm:text-sm font-sans font-medium tracking-wide transition-all duration-300 hover:scale-105"
       >
         Meet Geno
       </button>
     </div>
     
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 items-stretch">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-10 items-stretch">
     
       {/* Left Container - About */}
-      <div className="p-4 lg:p-8 flex flex-col">
-        <p className="text-xs uppercase tracking-[0.3em] text-white/50 font-sans mb-6 animate-fade-up">
+      <div className="p-2 sm:p-4 lg:p-8 flex flex-col">
+        <p className="text-[10px] sm:text-xs uppercase tracking-[0.3em] text-white/50 font-sans mb-4 sm:mb-6 animate-fade-up">
           Welcome to
         </p>
         
-        <div className="bg-black/30 backdrop-blur-xl border border-white/10 rounded-2xl p-6 md:p-8 flex flex-col flex-grow justify-between animate-fade-up">
+        <div className="bg-black/30 backdrop-blur-xl border border-white/10 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 flex flex-col flex-grow justify-between animate-fade-up gap-4 sm:gap-6">
             <div>
-              <h2 className="text-5xl md:text-6xl lg:text-7xl font-display italic text-white mb-6">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display italic text-white mb-4 sm:mb-6">
                 Events by Le'Voyage
               </h2>
-              <div className="h-px w-16 bg-white/40 mb-6"></div>
-              <p className="text-white/90 font-sans text-base md:text-lg leading-relaxed mb-4 max-w-lg">
+              <div className="h-px w-12 sm:w-16 bg-white/40 mb-4 sm:mb-6"></div>
+              <p className="text-white/90 font-sans text-sm sm:text-base md:text-lg leading-relaxed mb-3 sm:mb-4 max-w-lg">
                 Your personal gateway to curated travel experiences. Browse past adventures and discover upcoming journeys — all thoughtfully managed, scheduled, and organized by Ellie.
               </p>
-              <p className="text-white/70 font-sans text-sm leading-relaxed max-w-lg">
+              <p className="text-white/70 font-sans text-xs sm:text-sm leading-relaxed max-w-lg hidden sm:block">
                 From Mediterranean cruises to exotic destinations, every trip is crafted with care to create unforgettable memories.
               </p>
             </div>
             
             {/* Services */}
-            <div className="border-t border-white/20 pt-5">
-              <p className="text-[10px] uppercase tracking-[0.2em] text-white/50 font-sans mb-4">What We Offer</p>
-              <div className="grid grid-cols-2 gap-3">
+            <div className="border-t border-white/20 pt-4 sm:pt-5">
+              <p className="text-[10px] uppercase tracking-[0.2em] text-white/50 font-sans mb-3 sm:mb-4">What We Offer</p>
+              <div className="grid grid-cols-2 gap-2 sm:gap-3">
                 <div className="flex items-center gap-2 text-white/70">
-                  <span className="w-1.5 h-1.5 bg-white/50 rounded-full"></span>
-                  <span className="font-sans text-sm">Group Cruises</span>
+                  <span className="w-1 sm:w-1.5 h-1 sm:h-1.5 bg-white/50 rounded-full flex-shrink-0"></span>
+                  <span className="font-sans text-xs sm:text-sm">Group Cruises</span>
                 </div>
                 <div className="flex items-center gap-2 text-white/70">
-                  <span className="w-1.5 h-1.5 bg-white/50 rounded-full"></span>
-                  <span className="font-sans text-sm">Custom Itineraries</span>
+                  <span className="w-1 sm:w-1.5 h-1 sm:h-1.5 bg-white/50 rounded-full flex-shrink-0"></span>
+                  <span className="font-sans text-xs sm:text-sm">Custom Itineraries</span>
                 </div>
                 <div className="flex items-center gap-2 text-white/70">
-                  <span className="w-1.5 h-1.5 bg-white/50 rounded-full"></span>
-                  <span className="font-sans text-sm">Cabin Selection</span>
+                  <span className="w-1 sm:w-1.5 h-1 sm:h-1.5 bg-white/50 rounded-full flex-shrink-0"></span>
+                  <span className="font-sans text-xs sm:text-sm">Cabin Selection</span>
                 </div>
                 <div className="flex items-center gap-2 text-white/70">
-                  <span className="w-1.5 h-1.5 bg-white/50 rounded-full"></span>
-                  <span className="font-sans text-sm">Travel Planning</span>
+                  <span className="w-1 sm:w-1.5 h-1 sm:h-1.5 bg-white/50 rounded-full flex-shrink-0"></span>
+                  <span className="font-sans text-xs sm:text-sm">Travel Planning</span>
                 </div>
               </div>
             </div>
             
             {/* Contact */}
-            <div className="border-t border-white/20 pt-5">
-              <p className="text-[10px] uppercase tracking-[0.2em] text-white/50 font-sans mb-3">Need Help?</p>
-              <p className="text-white font-sans text-lg font-medium">Chat with us</p>
-              <p className="text-white/50 font-sans text-sm">Click the chat icon below to get started</p>
+            <div className="border-t border-white/20 pt-4 sm:pt-5">
+              <p className="text-[10px] uppercase tracking-[0.2em] text-white/50 font-sans mb-2 sm:mb-3">Need Help?</p>
+              <p className="text-white font-sans text-base sm:text-lg font-medium">Chat with us</p>
+              <p className="text-white/50 font-sans text-xs sm:text-sm">Click the chat icon below to get started</p>
             </div>
           </div>
       </div>
     
     {/* Right Container - Upcoming Trip Card */}
-    <div className="p-4 lg:p-8 flex flex-col">
-      <p className="text-xs uppercase tracking-[0.3em] text-white/50 font-sans mb-6 animate-fade-up" style={{ animationDelay: '0.2s' }}>
+    <div className="p-2 sm:p-4 lg:p-8 flex flex-col">
+      <p className="text-[10px] sm:text-xs uppercase tracking-[0.3em] text-white/50 font-sans mb-4 sm:mb-6 animate-fade-up" style={{ animationDelay: '0.2s' }}>
         Upcoming Journey
       </p>
       
@@ -785,62 +791,62 @@ const HomePage = ({ onSelectTrip, onMeetGeno }) => (
         className="w-full text-left group flex-grow flex animate-fade-up"
         style={{ animationDelay: '0.2s' }}
       >
-        <div className="relative w-full bg-black/30 backdrop-blur-xl border border-white/10 rounded-2xl p-6 md:p-8 flex flex-col flex-grow justify-between transition-all duration-300 hover:bg-black/40 hover:border-white/20 hover:scale-[1.02]">
+        <div className="relative w-full bg-black/30 backdrop-blur-xl border border-white/10 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 flex flex-col flex-grow justify-between transition-all duration-300 hover:bg-black/40 hover:border-white/20 hover:scale-[1.02] gap-4 sm:gap-6">
             {/* Card Header */}
-            <div className="flex items-start justify-between">
-              <div>
-                <h3 className="text-3xl md:text-4xl font-display italic text-white mb-1">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0 flex-1">
+                <h3 className="text-2xl sm:text-3xl md:text-4xl font-display italic text-white mb-1 truncate">
                   {TRIPS.med.title}
                 </h3>
-                <p className="text-white/70 font-sans text-sm font-medium">{TRIPS.med.route}</p>
+                <p className="text-white/70 font-sans text-xs sm:text-sm font-medium">{TRIPS.med.route}</p>
               </div>
-              <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-300">
-                <ChevronRight size={20} />
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-300 flex-shrink-0">
+                <ChevronRight size={18} className="sm:w-5 sm:h-5" />
               </div>
             </div>
             
             {/* Card Details */}
-            <div className="space-y-3">
-              <div className="flex items-center gap-3 text-white/80">
-                <Calendar size={16} className="text-white/60 flex-shrink-0" />
-                <span className="font-sans text-sm">{TRIPS.med.dates}</span>
+            <div className="space-y-2 sm:space-y-3">
+              <div className="flex items-center gap-2 sm:gap-3 text-white/80">
+                <Calendar size={14} className="text-white/60 flex-shrink-0 sm:w-4 sm:h-4" />
+                <span className="font-sans text-xs sm:text-sm">{TRIPS.med.dates}</span>
               </div>
-              <div className="flex items-center gap-3 text-white/80">
-                <Ship size={16} className="text-white/60 flex-shrink-0" />
-                <span className="font-sans text-sm">{TRIPS.med.ship} • {TRIPS.med.duration}</span>
+              <div className="flex items-center gap-2 sm:gap-3 text-white/80">
+                <Ship size={14} className="text-white/60 flex-shrink-0 sm:w-4 sm:h-4" />
+                <span className="font-sans text-xs sm:text-sm">{TRIPS.med.ship} • {TRIPS.med.duration}</span>
               </div>
-              <div className="flex items-center gap-3 text-white/80">
-                <MapPin size={16} className="text-white/60 flex-shrink-0" />
-                <span className="font-sans text-sm">{TRIPS.med.ports.join(' • ')}</span>
+              <div className="flex items-start gap-2 sm:gap-3 text-white/80">
+                <MapPin size={14} className="text-white/60 flex-shrink-0 mt-0.5 sm:w-4 sm:h-4" />
+                <span className="font-sans text-xs sm:text-sm leading-relaxed">{TRIPS.med.ports.join(' • ')}</span>
               </div>
             </div>
             
             {/* Pricing */}
-            <div className="border-t border-white/20 pt-5">
-              <p className="text-[10px] uppercase tracking-[0.2em] text-white/50 font-sans mb-4">Cabin Options</p>
-              <div className="grid grid-cols-3 gap-2">
+            <div className="border-t border-white/20 pt-4 sm:pt-5">
+              <p className="text-[10px] uppercase tracking-[0.2em] text-white/50 font-sans mb-3 sm:mb-4">Cabin Options</p>
+              <div className="grid grid-cols-3 gap-1 sm:gap-2">
                 {TRIPS.med.pricing.map((option) => (
                   <div key={option.type} className="text-center">
-                    <p className="text-white font-display text-xl">${option.price}</p>
-                    <p className="text-white/50 font-sans text-[10px] uppercase tracking-wider">{option.type}</p>
+                    <p className="text-white font-display text-base sm:text-lg md:text-xl">${option.price}</p>
+                    <p className="text-white/50 font-sans text-[8px] sm:text-[10px] uppercase tracking-wider">{option.type}</p>
                   </div>
                 ))}
               </div>
-              <p className="text-white/40 font-sans text-[10px] mt-4 italic">{TRIPS.med.note}</p>
+              <p className="text-white/40 font-sans text-[9px] sm:text-[10px] mt-3 sm:mt-4 italic hidden sm:block">{TRIPS.med.note}</p>
             </div>
             
             {/* Extras */}
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5 sm:gap-2">
               {TRIPS.med.extras.map((extra, i) => (
-                <span key={i} className="px-3 py-1.5 bg-white/10 rounded-full text-xs text-white/70 font-sans">
+                <span key={i} className="px-2 sm:px-3 py-1 sm:py-1.5 bg-white/10 rounded-full text-[10px] sm:text-xs text-white/70 font-sans">
                   {extra}
                 </span>
               ))}
             </div>
             
             {/* Hover hint */}
-            <p className="text-[10px] uppercase tracking-[0.2em] text-white/40 font-sans group-hover:text-white/70 transition-colors">
-              Click to explore destinations →
+            <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-white/40 font-sans group-hover:text-white/70 transition-colors">
+              Tap to explore destinations →
             </p>
           </div>
         </button>
@@ -852,22 +858,22 @@ const HomePage = ({ onSelectTrip, onMeetGeno }) => (
 
 // Trip Detail Page Component
 const TripDetailPage = ({ activeMarker, setActiveMarker, handleMarkerClick }) => (
-  <div className="w-full max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 px-4 items-stretch">
+  <div className="w-full max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-10 px-2 sm:px-4 items-stretch">
     
     {/* Map Container */}
-    <div className="p-4 lg:p-8 flex flex-col">
-      <p className="text-xs uppercase tracking-[0.3em] text-white/50 font-sans mb-6 animate-fade-up">
+    <div className="p-2 sm:p-4 lg:p-8 flex flex-col">
+      <p className="text-[10px] sm:text-xs uppercase tracking-[0.3em] text-white/50 font-sans mb-4 sm:mb-6 animate-fade-up">
         Select a destination
       </p>
       
-      <div className="bg-black/30 backdrop-blur-xl border border-white/10 rounded-2xl p-4 md:p-6 flex flex-col flex-grow animate-fade-up">
+      <div className="bg-black/30 backdrop-blur-xl border border-white/10 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 flex flex-col flex-grow animate-fade-up">
         {/* Map */}
         <div className="relative flex-grow flex items-center justify-center">
           <div className="relative w-full">
             <img 
               src="/map.jpg" 
               alt="Mediterranean Map" 
-              className="w-full h-auto object-contain rounded-xl"
+              className="w-full h-auto object-contain rounded-lg sm:rounded-xl"
             />
             
             {/* Map Markers */}
@@ -885,46 +891,46 @@ const TripDetailPage = ({ activeMarker, setActiveMarker, handleMarkerClick }) =>
         </div>
         
         {/* Map hint */}
-        <p className="text-[10px] uppercase tracking-[0.2em] text-white/40 font-sans mt-4 text-center">
-          Click on any marker to explore
+        <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-white/40 font-sans mt-3 sm:mt-4 text-center">
+          Tap on any marker to explore
         </p>
       </div>
     </div>
     
     {/* Content Container */}
-    <div className="p-4 lg:p-8 flex flex-col">
-      <p className="text-xs uppercase tracking-[0.3em] text-white/50 font-sans mb-6 animate-fade-up" style={{ animationDelay: '0.2s' }}>
+    <div className="p-2 sm:p-4 lg:p-8 flex flex-col">
+      <p className="text-[10px] sm:text-xs uppercase tracking-[0.3em] text-white/50 font-sans mb-4 sm:mb-6 animate-fade-up" style={{ animationDelay: '0.2s' }}>
         {activeMarker ? 'Destination Details' : 'Trip Overview'}
       </p>
       
-      <div className="bg-black/30 backdrop-blur-xl border border-white/10 rounded-2xl p-6 md:p-8 flex flex-col flex-grow justify-between animate-fade-up" style={{ animationDelay: '0.2s' }}>
+      <div className="bg-black/30 backdrop-blur-xl border border-white/10 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 flex flex-col flex-grow justify-between animate-fade-up gap-4 sm:gap-6" style={{ animationDelay: '0.2s' }}>
         {activeMarker ? (
           <>
             {/* Location Header */}
             <div>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-display italic text-white mb-2">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-display italic text-white mb-1 sm:mb-2">
                 {activeMarker.title}
               </h2>
-              <p className="text-xs md:text-sm uppercase tracking-[0.3em] text-white/60 font-sans">
+              <p className="text-[10px] sm:text-xs md:text-sm uppercase tracking-[0.3em] text-white/60 font-sans">
                 {activeMarker.subtext}
               </p>
             </div>
             
             {/* Description */}
-            <p className="text-white/90 font-sans text-base md:text-lg leading-relaxed max-w-lg">
+            <p className="text-white/90 font-sans text-sm sm:text-base md:text-lg leading-relaxed max-w-lg">
               {activeMarker.description}
             </p>
             
             {/* Highlights */}
             <div>
-              <p className="text-[10px] uppercase tracking-[0.2em] text-white/50 font-sans mb-4">
+              <p className="text-[10px] uppercase tracking-[0.2em] text-white/50 font-sans mb-3 sm:mb-4">
                 Highlights
               </p>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-1.5 sm:gap-2">
                 {activeMarker.highlights.map((highlight, index) => (
                   <span 
                     key={index}
-                    className="px-3 py-1.5 bg-white/10 rounded-full text-xs text-white/80 font-sans"
+                    className="px-2 sm:px-3 py-1 sm:py-1.5 bg-white/10 rounded-full text-[10px] sm:text-xs text-white/80 font-sans"
                   >
                     {highlight}
                   </span>
@@ -936,35 +942,35 @@ const TripDetailPage = ({ activeMarker, setActiveMarker, handleMarkerClick }) =>
           <>
             {/* Trip Header */}
             <div>
-              <h2 className="text-4xl md:text-5xl font-display italic text-white mb-2">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display italic text-white mb-1 sm:mb-2">
                 {TRIPS.med.title}
               </h2>
-              <p className="text-white/60 font-sans text-sm">{TRIPS.med.route}</p>
+              <p className="text-white/60 font-sans text-xs sm:text-sm">{TRIPS.med.route}</p>
             </div>
             
             {/* Trip Details */}
-            <div className="space-y-3">
-              <div className="flex items-center gap-3 text-white/80">
-                <Calendar size={16} className="text-white/60" />
-                <span className="font-sans text-sm">{TRIPS.med.dates}</span>
+            <div className="space-y-2 sm:space-y-3">
+              <div className="flex items-center gap-2 sm:gap-3 text-white/80">
+                <Calendar size={14} className="text-white/60 flex-shrink-0 sm:w-4 sm:h-4" />
+                <span className="font-sans text-xs sm:text-sm">{TRIPS.med.dates}</span>
               </div>
-              <div className="flex items-center gap-3 text-white/80">
-                <Ship size={16} className="text-white/60" />
-                <span className="font-sans text-sm">{TRIPS.med.ship} • {TRIPS.med.duration}</span>
+              <div className="flex items-center gap-2 sm:gap-3 text-white/80">
+                <Ship size={14} className="text-white/60 flex-shrink-0 sm:w-4 sm:h-4" />
+                <span className="font-sans text-xs sm:text-sm">{TRIPS.med.ship} • {TRIPS.med.duration}</span>
               </div>
-              <div className="flex items-center gap-3 text-white/80">
-                <MapPin size={16} className="text-white/60" />
-                <span className="font-sans text-sm">{TRIPS.med.ports.join(' • ')}</span>
+              <div className="flex items-start gap-2 sm:gap-3 text-white/80">
+                <MapPin size={14} className="text-white/60 flex-shrink-0 mt-0.5 sm:w-4 sm:h-4" />
+                <span className="font-sans text-xs sm:text-sm leading-relaxed">{TRIPS.med.ports.join(' • ')}</span>
               </div>
             </div>
             
             {/* Description */}
-            <p className="text-white/70 font-sans text-base leading-relaxed max-w-lg">
+            <p className="text-white/70 font-sans text-sm sm:text-base leading-relaxed max-w-lg">
               Explore the stunning Mediterranean coast with stops in France, Monaco, and Italy. Select a destination on the map to learn more about each port of call.
             </p>
             
             {/* Hint */}
-            <p className="text-[10px] uppercase tracking-[0.2em] text-white/40 font-sans">
+            <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-white/40 font-sans">
               Select a marker to view destination details
             </p>
           </>
@@ -977,17 +983,17 @@ const TripDetailPage = ({ activeMarker, setActiveMarker, handleMarkerClick }) =>
 
 // Musician Detail Page Component
 const MusicianDetailPage = ({ onBack }) => (
-  <div className="w-full max-w-[1400px] mx-auto px-4 py-4">
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 items-stretch">
+  <div className="w-full max-w-[1400px] mx-auto px-2 sm:px-4 py-2 sm:py-4">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-10 items-stretch">
       
       {/* Left - Artist Video */}
-      <div className="p-4 lg:p-8 flex flex-col">
-        <p className="text-xs uppercase tracking-[0.3em] text-white/50 font-sans mb-6 animate-fade-up">
+      <div className="p-2 sm:p-4 lg:p-8 flex flex-col">
+        <p className="text-[10px] sm:text-xs uppercase tracking-[0.3em] text-white/50 font-sans mb-4 sm:mb-6 animate-fade-up">
           Featured Artist
         </p>
         
-        <div className="bg-black/30 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden flex-grow animate-fade-up">
-          <div className="aspect-[4/5] relative">
+        <div className="bg-black/30 backdrop-blur-xl border border-white/10 rounded-xl sm:rounded-2xl overflow-hidden flex-grow animate-fade-up">
+          <div className="aspect-[3/4] sm:aspect-[4/5] relative">
             <video 
               src="/geno-video.mp4" 
               autoPlay
@@ -1006,14 +1012,14 @@ const MusicianDetailPage = ({ onBack }) => (
             />
             {/* Gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
-            <div className="absolute bottom-6 left-6 right-6">
-              <p className="text-[10px] uppercase tracking-[0.3em] text-amber-400 font-sans mb-2">
+            <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6">
+              <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.3em] text-amber-400 font-sans mb-1 sm:mb-2">
                 The Creole Cowboy
               </p>
-              <h2 className="text-4xl md:text-5xl font-display italic text-white">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display italic text-white">
                 Geno Delafose
               </h2>
-              <p className="text-white/60 font-sans text-sm mt-2">
+              <p className="text-white/60 font-sans text-xs sm:text-sm mt-1 sm:mt-2">
                 Keeping Zydeco Alive
               </p>
             </div>
@@ -1022,42 +1028,42 @@ const MusicianDetailPage = ({ onBack }) => (
       </div>
       
       {/* Right - Artist Bio */}
-      <div className="p-4 lg:p-8 flex flex-col">
-        <p className="text-xs uppercase tracking-[0.3em] text-white/50 font-sans mb-6 animate-fade-up" style={{ animationDelay: '0.2s' }}>
+      <div className="p-2 sm:p-4 lg:p-8 flex flex-col">
+        <p className="text-[10px] sm:text-xs uppercase tracking-[0.3em] text-white/50 font-sans mb-4 sm:mb-6 animate-fade-up" style={{ animationDelay: '0.2s' }}>
           About the Artist
         </p>
         
-        <div className="bg-black/30 backdrop-blur-xl border border-white/10 rounded-2xl p-6 md:p-8 flex flex-col flex-grow animate-fade-up overflow-y-auto max-h-[600px]" style={{ animationDelay: '0.2s' }}>
-          <div className="space-y-5">
+        <div className="bg-black/30 backdrop-blur-xl border border-white/10 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 flex flex-col flex-grow animate-fade-up overflow-y-auto max-h-[450px] sm:max-h-[500px] lg:max-h-[600px] custom-scrollbar" style={{ animationDelay: '0.2s' }}>
+          <div className="space-y-4 sm:space-y-5">
             <div>
-              <h3 className="text-2xl md:text-3xl font-display italic text-white mb-3">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-display italic text-white mb-2 sm:mb-3">
                 The Sound of Louisiana
               </h3>
-              <div className="h-px w-16 bg-amber-400/60 mb-4"></div>
+              <div className="h-px w-12 sm:w-16 bg-amber-400/60 mb-3 sm:mb-4"></div>
             </div>
             
-            <p className="text-white/90 font-sans text-sm md:text-base leading-relaxed">
+            <p className="text-white/90 font-sans text-xs sm:text-sm md:text-base leading-relaxed">
               Geno Delafose stands as living proof that tradition and vitality are not opposites—that the old ways, played with fire and conviction, can pack dance floors from the bayou country of southwest Louisiana to concert halls across the world. Born February 6, 1971 in Eunice, Louisiana, he has created the sound known as nouveau zydeco, deeply rooted in traditional Creole forms with strong influences from Cajun, country, and blues.
             </p>
             
-            <p className="text-white/70 font-sans text-sm leading-relaxed">
+            <p className="text-white/70 font-sans text-xs sm:text-sm leading-relaxed">
               His father was the legendary zydeco accordionist John Delafose. At age eight, Geno joined his father's band as a rubboard player and continued performing with them until his father's passing in 1994. The education was comprehensive—not just mechanics of rhythm and melody, but the philosophy of entertaining and the responsibility to the people who came to dance.
             </p>
             
-            <p className="text-white/70 font-sans text-sm leading-relaxed">
+            <p className="text-white/70 font-sans text-xs sm:text-sm leading-relaxed hidden sm:block">
               In 1994, he debuted with the album French Rockin' Boogie on Rounder Records—the name that became his band's identity. He was nominated for a Grammy Award for his 2007 album Le Cowboy Creole, a title capturing his dual identity as authentically as his music does.
             </p>
             
-            <p className="text-white/70 font-sans text-sm leading-relaxed">
+            <p className="text-white/70 font-sans text-xs sm:text-sm leading-relaxed hidden md:block">
               A 53-year-old accordion-playing, French-speaking cattle farmer, car hauler, and Evangeline Parish constable, he routinely juggles three to five gigs on most weekends. He divides his time between touring and operating his Double D Ranch outside Eunice, where he breeds cattle and raises quarter horses. To see Geno perform is to witness a man doing exactly what he was born to do.
             </p>
             
             {/* Highlights */}
-            <div className="border-t border-white/20 pt-4">
-              <p className="text-[10px] uppercase tracking-[0.2em] text-white/50 font-sans mb-3">Legacy</p>
-              <div className="flex flex-wrap gap-2">
+            <div className="border-t border-white/20 pt-3 sm:pt-4">
+              <p className="text-[10px] uppercase tracking-[0.2em] text-white/50 font-sans mb-2 sm:mb-3">Legacy</p>
+              <div className="flex flex-wrap gap-1.5 sm:gap-2">
                 {['Grammy Nominated', 'Le Cowboy Creole', 'French Rockin\' Boogie', 'Double D Ranch', 'Eunice, Louisiana', '30+ Years'].map((item, i) => (
-                  <span key={i} className="px-3 py-1.5 bg-amber-500/20 border border-amber-500/30 rounded-full text-xs text-amber-200/90 font-sans">
+                  <span key={i} className="px-2 sm:px-3 py-1 sm:py-1.5 bg-amber-500/20 border border-amber-500/30 rounded-full text-[10px] sm:text-xs text-amber-200/90 font-sans">
                     {item}
                   </span>
                 ))}
@@ -1068,7 +1074,7 @@ const MusicianDetailPage = ({ onBack }) => (
           {/* Back button */}
           <button 
             onClick={onBack}
-            className="mt-6 text-[10px] uppercase tracking-[0.2em] text-white/50 hover:text-white font-sans transition-colors flex items-center gap-2 flex-shrink-0"
+            className="mt-4 sm:mt-6 text-[10px] uppercase tracking-[0.2em] text-white/50 hover:text-white font-sans transition-colors flex items-center gap-2 flex-shrink-0 py-2"
           >
             ← Back to Cruise Details
           </button>
@@ -1137,35 +1143,38 @@ export default function TravelExperience() {
   };
 
   return (
-    <div className="fixed inset-0 bg-[#030303] flex items-center justify-center p-3 md:p-6 font-sans">
+    <div className="fixed inset-0 bg-[#030303] flex items-center justify-center p-1.5 sm:p-3 md:p-6 font-sans safe-area-top safe-area-bottom">
       <FontStyles />
       
       {/* Main Container with rounded frame */}
-      <div className="relative w-full h-full max-w-[1800px] bg-black rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden shadow-2xl ring-1 ring-white/5">
+      <div className="relative w-full h-full max-w-[1800px] bg-black rounded-xl sm:rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden shadow-2xl ring-1 ring-white/5">
         
         {/* Dynamic Background */}
         <Background activeMarker={currentView === 'trip' ? activeMarker : null} />
 
         {/* Main Content */}
-        <div className="absolute inset-0 z-10 flex flex-col p-6 md:p-12 lg:p-16">
+        <div className="absolute inset-0 z-10 flex flex-col p-3 sm:p-6 md:p-12 lg:p-16">
           
           {/* Header */}
-          <header className="flex justify-between items-start z-50">
-            <button onClick={handleGoHome} className="cursor-pointer group text-left">
-              <h1 className="text-lg md:text-xl font-display italic text-white/80 group-hover:text-white transition-colors">
-                Ellie David <span className="text-white/50 group-hover:text-white/70">Events by Le'Voyage</span>
+          <header className="flex justify-between items-start z-50 gap-2">
+            <button onClick={handleGoHome} className="cursor-pointer group text-left min-w-0 flex-1">
+              <h1 className="text-sm sm:text-lg md:text-xl font-display italic text-white/80 group-hover:text-white transition-colors truncate">
+                <span className="hidden sm:inline">Ellie David </span>
+                <span className="sm:hidden">Le'Voyage </span>
+                <span className="text-white/50 group-hover:text-white/70 hidden sm:inline">Events by Le'Voyage</span>
               </h1>
             </button>
             <button 
               onClick={() => setIsRegistering(true)} 
-              className="bg-white/10 hover:bg-white hover:text-black backdrop-blur-md border border-white/30 px-5 py-2.5 rounded-full text-[8px] font-semibold tracking-[0.2em] uppercase transition-all duration-300 font-sans shadow-lg"
+              className="bg-white/10 hover:bg-white hover:text-black backdrop-blur-md border border-white/30 px-3 sm:px-5 py-2 sm:py-2.5 rounded-full text-[7px] sm:text-[8px] font-semibold tracking-[0.15em] sm:tracking-[0.2em] uppercase transition-all duration-300 font-sans shadow-lg flex-shrink-0"
             >
-              Reserve Spot
+              <span className="hidden sm:inline">Reserve Spot</span>
+              <span className="sm:hidden">Reserve</span>
             </button>
           </header>
 
           {/* Center Content Area */}
-          <main className="flex-1 relative flex items-start justify-center z-20 overflow-y-auto pt-4">
+          <main className="flex-1 relative flex items-start justify-center z-20 overflow-y-auto pt-2 sm:pt-4 -mx-1 px-1">
             {currentView === 'home' && (
               <HomePage onSelectTrip={handleSelectTrip} onMeetGeno={handleMeetGeno} />
             )}
@@ -1182,18 +1191,18 @@ export default function TravelExperience() {
           </main>
 
           {/* Footer */}
-          <footer className="z-20">
-            <div className="flex items-center justify-between border-t border-white/10 pt-6">
+          <footer className="z-20 flex-shrink-0">
+            <div className="flex items-center justify-between border-t border-white/10 pt-3 sm:pt-6 gap-2">
               <ChatButton onClick={handleChatToggle} isOpen={isChatOpen} />
               
               {/* Locations Navigation - only visible on trip view */}
               {currentView === 'trip' && (
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1 sm:gap-2">
                   {/* Left Arrow */}
                   <button
                     onClick={handlePrevLocation}
                     className="
-                      w-10 h-10 rounded-xl
+                      w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl
                       bg-black/30 backdrop-blur-xl border border-white/10
                       hover:bg-black/40 hover:border-white/20
                       flex items-center justify-center
@@ -1203,25 +1212,25 @@ export default function TravelExperience() {
                     "
                     aria-label="Previous location"
                   >
-                    <ChevronLeft size={16} className="text-white/70 group-hover:text-white transition-colors" />
+                    <ChevronLeft size={14} className="text-white/70 group-hover:text-white transition-colors sm:w-4 sm:h-4" />
                   </button>
                   
                   {/* Locations Label */}
                   <div className="
-                    px-5 py-2.5 rounded-xl
+                    px-3 sm:px-5 py-2 sm:py-2.5 rounded-lg sm:rounded-xl
                     bg-black/30 backdrop-blur-xl border border-white/10
-                    flex items-center gap-2
-                    font-sans text-[10px] uppercase tracking-[0.15em] font-medium text-white/70
+                    flex items-center gap-1.5 sm:gap-2
+                    font-sans text-[9px] sm:text-[10px] uppercase tracking-[0.15em] font-medium text-white/70
                   ">
-                    <MapPin size={14} />
-                    <span>Locations</span>
+                    <MapPin size={12} className="sm:w-3.5 sm:h-3.5" />
+                    <span className="hidden xs:inline">Locations</span>
                   </div>
                   
                   {/* Right Arrow */}
                   <button
                     onClick={handleNextLocation}
                     className="
-                      w-10 h-10 rounded-xl
+                      w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl
                       bg-black/30 backdrop-blur-xl border border-white/10
                       hover:bg-black/40 hover:border-white/20
                       flex items-center justify-center
@@ -1231,12 +1240,12 @@ export default function TravelExperience() {
                     "
                     aria-label="Next location"
                   >
-                    <ChevronRight size={16} className="text-white/70 group-hover:text-white transition-colors" />
+                    <ChevronRight size={14} className="text-white/70 group-hover:text-white transition-colors sm:w-4 sm:h-4" />
                   </button>
                 </div>
               )}
               
-              <p className="text-[8px] uppercase tracking-[0.2em] text-white/70 font-sans hidden md:block">
+              <p className="text-[7px] sm:text-[8px] uppercase tracking-[0.15em] sm:tracking-[0.2em] text-white/70 font-sans hidden sm:block">
                 Ellie David • Events by Le'Voyage
               </p>
             </div>
