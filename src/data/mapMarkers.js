@@ -31,7 +31,7 @@ export const MAP_MARKERS = [
     title: 'Florence & Pisa',
     description: 'The cradle of the Renaissance. Marvel at Michelangelo\'s David, the Uffizi Gallery, and the iconic Leaning Tower of Pisa just a short journey away.',
     highlights: ['Uffizi Gallery', 'Duomo di Firenze', 'Leaning Tower of Pisa', 'Ponte Vecchio'],
-    video: '/videos/florence.mov'
+    video: '/videos/florence.mp4'
   },
   { 
     id: 'salerno', 
